@@ -6,6 +6,7 @@ import br.com.medcontrol.service.CirurgiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,11 @@ public class CirurgiaController {
     @GetMapping()
     public ResponseEntity<List<Cirurgia>> getCirurgias(){
         return ResponseEntity.ok(cirurgiaService.getCirurgias());
+    }
+
+    @PostMapping
+    public ResponseEntity<Cirurgia> saveCirurgia(Cirurgia cirurgiaRequest){
+        return ResponseEntity.ok(cirurgiaService.saveCirurgia(cirurgiaRequest));
     }
 
 }
