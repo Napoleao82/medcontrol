@@ -18,7 +18,17 @@ public class CirurgiaController {
 
     @GetMapping()
     public ResponseEntity<List<Cirurgia>> getCirurgias(){
+
         return ResponseEntity.ok(cirurgiaService.getCirurgias());
+    }
+
+
+    //TODO COMO QUE EU VOU PEGAR UM PARAMETRO, NO CASO O ID DA CIRURGIA
+    @GetMapping()
+    public ResponseEntity<Cirurgia> getCirurgia(){
+
+        
+
     }
 
     @PostMapping

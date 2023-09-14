@@ -31,7 +31,9 @@ public class CirurgiaService {
             a.setId(cirurgia.getId());
 
             cirurgias.add(a);
+
         }
+
 
 
         return cirurgias;
