@@ -20,7 +20,7 @@ public class CirurgiaService {
         //TODO implmemetnar o que precisa para reotnrar
         Cirurgia cirurgia = new Cirurgia();
 
-        cirurgia.setDataCirurgia(LocalDateTime.now());
+
         cirurgia.setTipoCirurgia("Fimose");
         cirurgia.setPaciente("Otto");
         ArrayList<Cirurgia> cirurgias =  new ArrayList<>();
@@ -31,16 +31,20 @@ public class CirurgiaService {
 
     public Cirurgia saveCirurgia(Cirurgia cirurgia){
         CirurgiaEntity cirurgiaEntity = new CirurgiaEntity();
-
         cirurgiaEntity.setCirugiao(cirurgia.getCirugiao());
         //TODO Continuar com o mapeamento dos objetos aqui
+
+        cirurgiaEntity.setPaciente(cirurgia.getPaciente());
+        cirurgiaEntity.setDataCirurgia(cirurgia.getDataCirurgia());
+        cirurgiaEntity.setTipoCirurgia(cirurgia.getTipoCirurgia());
 
         //Aqui salvamos o objeto
         cirurgiaRepository.save(cirurgiaEntity);
 
 
         //Aqui retornei o ID em que o paciente foi salvo no BD
-        cirurgia.setId(cirurgia.getId());
+        cirurgia.setId(cirurgiaEntity.getId());
         return cirurgia;
+
     }
 }

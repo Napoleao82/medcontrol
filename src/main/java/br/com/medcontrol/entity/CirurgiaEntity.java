@@ -23,7 +23,7 @@ public class CirurgiaEntity {
     public String Paciente;
 
     @Column(name = "DT_CIRURGIA")
-    public LocalDateTime dataCirurgia;
+    public String dataCirurgia;
 
     @Column(name = "TIPO_CIRURGIA")
     public String tipoCirurgia;
