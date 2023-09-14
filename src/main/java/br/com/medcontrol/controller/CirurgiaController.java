@@ -27,8 +27,8 @@ public class CirurgiaController {
     @GetMapping()
     public ResponseEntity<Cirurgia> getCirurgia(){
 
-        
 
+        return null;
     }
 
     @PostMapping
