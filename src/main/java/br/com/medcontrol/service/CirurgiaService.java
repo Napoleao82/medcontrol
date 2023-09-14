@@ -18,13 +18,21 @@ public class CirurgiaService {
 
     public List<Cirurgia> getCirurgias(){
         //TODO implmemetnar o que precisa para reotnrar
-        Cirurgia cirurgia = new Cirurgia();
-
-
-        cirurgia.setTipoCirurgia("Fimose");
-        cirurgia.setPaciente("Otto");
         ArrayList<Cirurgia> cirurgias =  new ArrayList<>();
-        cirurgias.add(cirurgia);
+
+        var cirurgiasBD = cirurgiaRepository.findAll();
+        for (CirurgiaEntity cirurgia : cirurgiasBD) {
+            Cirurgia a = new Cirurgia();
+
+            a.setCirugiao(cirurgia.getCirugiao());
+            a.setPaciente(cirurgia.getPaciente());
+            a.setDataCirurgia(cirurgia.getDataCirurgia());
+            a.setTipoCirurgia(cirurgia.getTipoCirurgia());
+            a.setId(cirurgia.getId());
+
+            cirurgias.add(a);
+        }
+
 
         return cirurgias;
     }
