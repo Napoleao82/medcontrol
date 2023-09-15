@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/cirurgias")
+@RequestMapping("cirurgias")
 @RestController
 public class CirurgiaController {
 
@@ -17,23 +17,24 @@ public class CirurgiaController {
     private CirurgiaService cirurgiaService;
 
     @GetMapping()
-    public ResponseEntity<List<Cirurgia>> getCirurgias(){
+    public ResponseEntity<List<Cirurgia>> getCirurgias() {
 
         return ResponseEntity.ok(cirurgiaService.getCirurgias());
     }
 
 
     //TODO COMO QUE EU VOU PEGAR UM PARAMETRO, NO CASO O ID DA CIRURGIA
-    @GetMapping()
-    public ResponseEntity<Cirurgia> getCirurgia(){
+    @GetMapping("/todas")
+    public ResponseEntity<Cirurgia> getCirurgia() {
 
 
         return null;
     }
 
     @PostMapping
-    public ResponseEntity<Cirurgia> saveCirurgia(@RequestBody Cirurgia cirurgiaRequest){
+    public ResponseEntity<Cirurgia> saveCirurgia(@RequestBody Cirurgia cirurgiaRequest) {
         return ResponseEntity.ok(cirurgiaService.saveCirurgia(cirurgiaRequest));
+
     }
 
 
