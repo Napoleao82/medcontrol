@@ -24,17 +24,21 @@ public class CirurgiaController {
 
 
     //TODO COMO QUE EU VOU PEGAR UM PARAMETRO, NO CASO O ID DA CIRURGIA
-    @GetMapping("/todas")
-    public ResponseEntity<Cirurgia> getCirurgia() {
+    @GetMapping("/{id}")
+    public ResponseEntity<Cirurgia> getCirurgia(@PathVariable Long id) {
 
-
-        return null;
+        return ResponseEntity.ok(cirurgiaService.getCirurgia(id));
     }
 
     @PostMapping
     public ResponseEntity<Cirurgia> saveCirurgia(@RequestBody Cirurgia cirurgiaRequest) {
         return ResponseEntity.ok(cirurgiaService.saveCirurgia(cirurgiaRequest));
 
+    }
+
+    @PutMapping("/{id}")
+    public  ResponseEntity<Cirurgia> putCirurgia (@RequestBody Cirurgia cirurgiaRequest, @PathVariable long id) {
+        return ResponseEntity.ok(cirurgiaService.putCirurgia(cirurgiaRequest,id));
     }
 
 

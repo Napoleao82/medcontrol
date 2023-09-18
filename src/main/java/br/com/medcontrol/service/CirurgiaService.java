@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CirurgiaService {
@@ -55,6 +56,48 @@ public class CirurgiaService {
         //Aqui retornei o ID em que o paciente foi salvo no BD
         cirurgia.setId(cirurgiaEntity.getId());
         return cirurgia;
+
+    }
+
+    public Cirurgia getCirurgia(Long id){
+
+        Cirurgia cirurgia = new Cirurgia();
+        Optional<CirurgiaEntity> cirurgiaBD = cirurgiaRepository.findById(id);
+
+        cirurgia.setId(cirurgiaBD.get().id);
+        cirurgia.setTipoCirurgia(cirurgiaBD.get().tipoCirurgia);
+        cirurgia.setDataCirurgia(cirurgiaBD.get().dataCirurgia);
+        cirurgia.setPaciente(cirurgiaBD.get().Paciente);
+        cirurgia.setCirugiao(cirurgiaBD.get().Cirugiao);
+
+        return cirurgia;
+
+        // se cirurgia = nula
+        // escreva "cirurgia não encontrada"
+
+    }
+
+    public Cirurgia putCirurgia(Cirurgia cirurgiaAtualizada,long id) {
+
+        Optional<CirurgiaEntity> cirurgiaBD = cirurgiaRepository.findById(id);
+
+
+        cirurgiaBD.get().setTipoCirurgia(cirurgiaAtualizada.getTipoCirurgia());
+        cirurgiaBD.get().setDataCirurgia(cirurgiaAtualizada.getDataCirurgia());
+        cirurgiaBD.get().setPaciente(cirurgiaAtualizada.getPaciente());
+        cirurgiaBD.get().setCirugiao(cirurgiaAtualizada.getCirugiao());
+
+        CirurgiaEntity cirurgiaSalva = cirurgiaRepository.save(cirurgiaBD.get());
+
+        Cirurgia putCirurgia = new Cirurgia();
+
+        putCirurgia.setTipoCirurgia(cirurgiaSalva.getTipoCirurgia());
+        putCirurgia.setDataCirurgia(cirurgiaSalva.getDataCirurgia());
+        putCirurgia.setPaciente(cirurgiaSalva.getPaciente());
+        putCirurgia.setCirugiao(cirurgiaSalva.getCirugiao());
+
+        return putCirurgia;
+
 
     }
 }
