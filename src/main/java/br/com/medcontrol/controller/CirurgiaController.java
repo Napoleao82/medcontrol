@@ -41,5 +41,11 @@ public class CirurgiaController {
         return ResponseEntity.ok(cirurgiaService.putCirurgia(cirurgiaRequest,id));
     }
 
+    @DeleteMapping( "/{id}")
+    public  ResponseEntity<Boolean> deletCirurgia (@PathVariable long id) {
+
+        return ResponseEntity.ok(cirurgiaService.deleteCirurgia(id));
+    }
+
 
 }

@@ -100,4 +100,13 @@ public class CirurgiaService {
 
 
     }
+
+    public  Boolean deleteCirurgia(long id) {
+
+        cirurgiaRepository.deleteById(id);
+
+        return true;
+
+    }
+
 }
