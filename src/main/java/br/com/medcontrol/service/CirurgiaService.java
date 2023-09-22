@@ -17,96 +17,141 @@ public class CirurgiaService {
     @Autowired
     private CirurgiaRepository cirurgiaRepository;
 
-    public List<Cirurgia> getCirurgias(){
+
+    public List<Cirurgia> getCirurgias() {
         //TODO implmemetnar o que precisa para reotnrar
-        ArrayList<Cirurgia> cirurgias =  new ArrayList<>();
+        ArrayList<Cirurgia> cirurgias = new ArrayList<>();
 
-        var cirurgiasBD = cirurgiaRepository.findAll();
-        for (CirurgiaEntity cirurgia : cirurgiasBD) {
-            Cirurgia a = new Cirurgia();
+        try {
+            // Recupere cirurgias do repositório (presumindo que cirurgiaRepository é um repositório válido)
+            var cirurgiasBD = cirurgiaRepository.findAll();
 
-            a.setCirugiao(cirurgia.getCirugiao());
-            a.setPaciente(cirurgia.getPaciente());
-            a.setDataCirurgia(cirurgia.getDataCirurgia());
-            a.setTipoCirurgia(cirurgia.getTipoCirurgia());
-            a.setId(cirurgia.getId());
+            for (CirurgiaEntity cirurgia : cirurgiasBD) {
+                Cirurgia a = new Cirurgia();
 
-            cirurgias.add(a);
+                a.setCirugiao(cirurgia.getCirugiao());
+                a.setPaciente(cirurgia.getPaciente());
+                a.setDataCirurgia(cirurgia.getDataCirurgia());
+                a.setTipoCirurgia(cirurgia.getTipoCirurgia());
+                a.setId(cirurgia.getId());
+                cirurgias.add(a);
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            System.out.println(" cirurgia não encontrada tente novamente ");
 
         }
-
-
 
         return cirurgias;
     }
 
-    public Cirurgia saveCirurgia(Cirurgia cirurgia){
-        CirurgiaEntity cirurgiaEntity = new CirurgiaEntity();
-        cirurgiaEntity.setCirugiao(cirurgia.getCirugiao());
-        //TODO Continuar com o mapeamento dos objetos aqui
 
-        cirurgiaEntity.setPaciente(cirurgia.getPaciente());
-        cirurgiaEntity.setDataCirurgia(cirurgia.getDataCirurgia());
-        cirurgiaEntity.setTipoCirurgia(cirurgia.getTipoCirurgia());
+    public Cirurgia saveCirurgia(Cirurgia cirurgia) {
+        try {
+            CirurgiaEntity cirurgiaEntity = new CirurgiaEntity();
+            cirurgiaEntity.setCirugiao(cirurgia.getCirugiao());
 
-        //Aqui salvamos o objeto
-        cirurgiaRepository.save(cirurgiaEntity);
+            // TODO: Continuar com o mapeamento dos objetos aqui
+            cirurgiaEntity.setPaciente(cirurgia.getPaciente());
+            cirurgiaEntity.setDataCirurgia(cirurgia.getDataCirurgia());
+            cirurgiaEntity.setTipoCirurgia(cirurgia.getTipoCirurgia());
+
+            // Aqui salvamos o objeto
+            cirurgiaRepository.save(cirurgiaEntity);
+
+            // Aqui retornei o ID em que o paciente foi salvo no BD
+            cirurgia.setId(cirurgiaEntity.getId());
 
 
-        //Aqui retornei o ID em que o paciente foi salvo no BD
-        cirurgia.setId(cirurgiaEntity.getId());
-        return cirurgia;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("cirurgia não pode ser salva");
+}
 
+         return cirurgia;
     }
 
-    public Cirurgia getCirurgia(Long id){
-
+    public Cirurgia getCirurgia(Long id) {
         Cirurgia cirurgia = new Cirurgia();
-        Optional<CirurgiaEntity> cirurgiaBD = cirurgiaRepository.findById(id);
+        try {
+            cirurgia = new Cirurgia();
+            Optional<CirurgiaEntity> cirurgiaBD = cirurgiaRepository.findById(id);
 
-        cirurgia.setId(cirurgiaBD.get().id);
-        cirurgia.setTipoCirurgia(cirurgiaBD.get().tipoCirurgia);
-        cirurgia.setDataCirurgia(cirurgiaBD.get().dataCirurgia);
-        cirurgia.setPaciente(cirurgiaBD.get().Paciente);
-        cirurgia.setCirugiao(cirurgiaBD.get().Cirugiao);
+            cirurgia.setId(cirurgiaBD.get().getId());
+            cirurgia.setTipoCirurgia(cirurgiaBD.get().getTipoCirurgia());
+            cirurgia.setDataCirurgia(cirurgiaBD.get().getDataCirurgia());
+            cirurgia.setPaciente(cirurgiaBD.get().getPaciente());
+            cirurgia.setCirugiao(cirurgiaBD.get().getCirugiao());
 
+            return cirurgia;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("cirurgia não encontrada");
+        }
         return cirurgia;
-
-        // se cirurgia = nula
-        // escreva "cirurgia não encontrada"
-
     }
 
-    public Cirurgia putCirurgia(Cirurgia cirurgiaAtualizada,long id) {
+    public Cirurgia putCirurgia(Cirurgia cirurgiaAtualizada, long id) {
 
-        Optional<CirurgiaEntity> cirurgiaBD = cirurgiaRepository.findById(id);
+        try {
+            Optional<CirurgiaEntity> cirurgiaBD = cirurgiaRepository.findById(id);
+
+            cirurgiaBD.get().setTipoCirurgia(cirurgiaAtualizada.getTipoCirurgia());
+            cirurgiaBD.get().setDataCirurgia(cirurgiaAtualizada.getDataCirurgia());
+            cirurgiaBD.get().setPaciente(cirurgiaAtualizada.getPaciente());
+            cirurgiaBD.get().setCirugiao(cirurgiaAtualizada.getCirugiao());
+
+            CirurgiaEntity cirurgiaSalva = cirurgiaRepository.save(cirurgiaBD.get());
+
+            Cirurgia putCirurgia = new Cirurgia();
+
+            putCirurgia.setTipoCirurgia(cirurgiaSalva.getTipoCirurgia());
+            putCirurgia.setDataCirurgia(cirurgiaSalva.getDataCirurgia());
+            putCirurgia.setPaciente(cirurgiaSalva.getPaciente());
+            putCirurgia.setCirugiao(cirurgiaSalva.getCirugiao());
+
+            return putCirurgia;
 
 
-        cirurgiaBD.get().setTipoCirurgia(cirurgiaAtualizada.getTipoCirurgia());
-        cirurgiaBD.get().setDataCirurgia(cirurgiaAtualizada.getDataCirurgia());
-        cirurgiaBD.get().setPaciente(cirurgiaAtualizada.getPaciente());
-        cirurgiaBD.get().setCirugiao(cirurgiaAtualizada.getCirugiao());
+        } catch (Exception e) {
 
-        CirurgiaEntity cirurgiaSalva = cirurgiaRepository.save(cirurgiaBD.get());
+            e.printStackTrace();
+            System.out.println("cirurgia não pode ser editada");
 
-        Cirurgia putCirurgia = new Cirurgia();
-
-        putCirurgia.setTipoCirurgia(cirurgiaSalva.getTipoCirurgia());
-        putCirurgia.setDataCirurgia(cirurgiaSalva.getDataCirurgia());
-        putCirurgia.setPaciente(cirurgiaSalva.getPaciente());
-        putCirurgia.setCirugiao(cirurgiaSalva.getCirugiao());
-
-        return putCirurgia;
-
-
+        }
+        return cirurgiaAtualizada;
     }
 
-    public  Boolean deleteCirurgia(long id) {
+    public Boolean deleteCirurgia(long id) {
+        try {
+            Optional<CirurgiaEntity> buscarid = cirurgiaRepository.findById(id);
 
-        cirurgiaRepository.deleteById(id);
+            if (buscarid.isEmpty()) {
+                System.out.println("cirurgia não encontrada");
+            } else {
+                System.out.println("cirurgia apagada com sucesso");
 
+                cirurgiaRepository.deleteById(id);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            System.out.println("está cirurgia não pode ser deletada");
+        }
         return true;
-
     }
+
 
 }
+
+
+
+
+
+
+
+
+
