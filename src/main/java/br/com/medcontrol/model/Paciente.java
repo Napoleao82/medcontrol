@@ -10,4 +10,8 @@ public class Paciente extends Pessoa {
     public Paciente(String nome, int idade, char sexo) {
         super(nome, idade, sexo);
     }
+
+    public Paciente() {
+        super();
+    }
 }

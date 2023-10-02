@@ -7,8 +7,10 @@ package br.com.medcontrol.model;
         private String especialidade;
         private String RM; // Registro Médico
 
-        public Cirurgiao(String nome, int idade, char sexo) {
+        public Cirurgiao(String nome, int idade, char sexo, String especialidade, String rm) {
             super(nome, idade, sexo);
+            setEspecialidade(especialidade);
+            setRM(rm);
         }
 
         public String getEspecialidade() {
@@ -26,5 +28,8 @@ package br.com.medcontrol.model;
         public void setRM(String RM) {
             this.RM = RM;
         }
+
+
+
     }
 

@@ -15,7 +15,11 @@ public class Pessoa {
             this.sexo = sexo;
         }
 
-        public String getNome() {
+    public Pessoa() {
+
+    }
+
+    public String getNome() {
             return nome;
         }
 
