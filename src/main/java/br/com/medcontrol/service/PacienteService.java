@@ -24,21 +24,21 @@ import java.util.Optional;
   private PacienteRepository pacienteRepository;
 
 
-  public Paciente getPaciente(Long id) { // buscando paciente
-   Paciente pacienteApi = new Paciente(); // instanciando um novo paciente
+  public Paciente getPaciente(Long id) {                                                // buscando paciente
+   Paciente pacienteApi = new Paciente();                                              // instanciando um novo paciente
 
-   try { // cuidadno pra se der erro
-    Optional<PacienteEntity> pacienteBD = pacienteRepository.findById(id); // não sei
+   try {                                                                             // cuidadno pra se der erro
+    Optional<PacienteEntity> pacienteBD = pacienteRepository.findById(id);          // não sei
 
-    pacienteBD.get().setId(pacienteApi.getId());// implementando para buscar o id do paciente
-    pacienteBD.get().setSexo(pacienteApi.getSexo() + "");
-    pacienteBD.get().setNome(pacienteApi.getNome());
-    pacienteBD.get().setIdade(pacienteApi.getIdade() + "");
+    pacienteApi.setId(pacienteBD.get().getId());                                   // implementando para buscar o id do paciente
+    pacienteApi.setSexo(pacienteBD.get().getSexo());
+    pacienteApi.setNome(pacienteBD.get().getNome());
+    pacienteApi.setIdade(pacienteBD.get().getIdade());
 
 
-    return pacienteApi; // retornando o paciente
+    return pacienteApi;                                                           // retornando o paciente
 
-   } catch (Exception e) { // se der erro vai retornar isso aqui
+   } catch (Exception e) {                                                         // se der erro vai retornar isso aqui
     e.printStackTrace();
     System.out.println("paciente não encontrado");
    }
@@ -53,19 +53,22 @@ import java.util.Optional;
 
    try {
 
-    List<PacienteEntity> pacienteBD = pacienteRepository.findAll();
+    List<PacienteEntity> pacientesBD = pacienteRepository.findAll();
 
-    for (PacienteEntity paciente : pacienteBD) {
-     var nome = "cavalaria";
-     var idade = 1;
-     var sexo = 'm';
-     Paciente a = new Paciente(nome, idade, sexo);
+     for (PacienteEntity paciente : pacientesBD){
+      Paciente a = new Paciente();
 
-     return pacientes;
+      a.setNome(paciente.getNome());
+      a.setIdade(paciente.getIdade());
+      a.setSexo(paciente.getSexo());
+      a.setId(paciente.getId());
 
+      pacientes.add(a);
     }
+   return pacientes;
 
-   } catch (Exception e) {
+
+  } catch (Exception e) {
     e.printStackTrace();
     System.out.println("paciente não encontrado");
 
@@ -78,8 +81,8 @@ import java.util.Optional;
 
    try {
     PacienteEntity pacienteEntity = new PacienteEntity();
-    pacienteEntity.setIdade(paciente.getIdade() + "");
-    pacienteEntity.setSexo(paciente.getSexo() + "");
+    pacienteEntity.setIdade(paciente.getIdade());
+    pacienteEntity.setSexo(paciente.getSexo());
     pacienteEntity.setNome(paciente.getNome());
 
     // Aqui salvamos o objeto
@@ -102,16 +105,17 @@ import java.util.Optional;
 
    try {
     Optional<PacienteEntity> pacienteBD = pacienteRepository.findById(id);
+
     pacienteBD.get().setNome(pacienteAtualizado.getNome());
     pacienteBD.get().setSexo(pacienteAtualizado.getSexo());
-    pacienteBD.get().setIdade(pacienteAtualizado.getIdade() + "");
+    pacienteBD.get().setIdade(pacienteAtualizado.getIdade());
 
     PacienteEntity pacienteSalvo = pacienteRepository.save(pacienteBD.get());
 
     Paciente putPaciente = new Paciente();
 
     putPaciente.setNome(pacienteSalvo.getNome());
-    putPaciente.setIdade(Integer.parseInt(pacienteSalvo.getIdade()));
+    putPaciente.setIdade(Integer.parseInt(pacienteSalvo.getIdade()+""));
     putPaciente.setSexo(pacienteSalvo.getSexo());
 
     return putPaciente;
@@ -131,12 +135,14 @@ import java.util.Optional;
    try {
     Optional<PacienteEntity> buscarid = pacienteRepository.findById(id);
 
+    // isso é rolha ?
+
     if (buscarid.isEmpty()) {
      System.out.println("Paciente não encontrado");
     } else {
      System.out.println("paciente apagado com sucesso");
 
-     PacienteRepository.deleteById(id);
+     pacienteRepository.deleteById(id);
     }
 
    } catch (Exception e) {

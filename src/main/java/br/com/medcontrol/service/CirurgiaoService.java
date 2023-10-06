@@ -3,6 +3,7 @@ package br.com.medcontrol.service;
 
 import br.com.medcontrol.entity.CirurgiaEntity;
 import br.com.medcontrol.entity.CirurgiaoEntity;
+import br.com.medcontrol.model.Cirurgia;
 import br.com.medcontrol.model.Cirurgiao;
 import br.com.medcontrol.repository.CirurgiaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,22 @@ public class CirurgiaoService {
     private CirurgiaoRepository cirurgiaoRepository;
 
 
-    public Cirurgiao getCirurgiao(Log id){
+    public Cirurgiao getCirurgiao(long id){
         Cirurgiao cirurgiaoApi = new Cirurgiao();
 
         try {
             Optional<CirurgiaoEntity> cirurgiaoBD = cirurgiaoRepository.findById(id);
 
-            cirurgiaoBD.get().setId(cirurgiaoApi.getId());
-            cirurgiaoBD.get().setEspecialidade(cirurgiaoApi.getEspecialidade());
-            cirurgiaoBD.get().setRm(cirurgiaoApi.getRM());
-            cirurgiaoBD.get().setNome(cirurgiaoApi.getNome());
+            cirurgiaoApi.setId(cirurgiaoBD.get().getId());
+            cirurgiaoApi.setSexo(cirurgiaoBD.get().getSexo());
+            cirurgiaoApi.setNome(cirurgiaoBD.get().getNome());
+            cirurgiaoApi.setIdade(cirurgiaoBD.get().getIdade());
+            cirurgiaoApi.setEspecialidade(cirurgiaoBD.get().getEspecialidade());
+            cirurgiaoApi.setRM(cirurgiaoBD.get().getRm());
+
+            //cirurgiaoApi = new Cirurgiao(cirurgiaoBD.get().getNome(), cirurgiaoApi.getIdade(), cirurgiaoApi.getEspecialidade(), cirurgiaoApi.getRM(),
+                   // cirurgiaoApi.getIdade(), cirurgiaoApi.getId());
+
 
             return cirurgiaoApi;
 
@@ -44,33 +51,122 @@ public class CirurgiaoService {
         }
 
 
-    public List<Cirurgiao> getcirurgioes() { // buscar todos cirurgioes do banco de dados
+    public List<Cirurgiao> getcirurgioes() {                        // buscar todos cirurgioes do banco de dados
 
-        ArrayList<Cirurgiao> cirurgioes = new ArrayList<>(); // criando uma lista de de cirurgioes
+        ArrayList<Cirurgiao> cirurgioes = new ArrayList<>();       // criando uma lista de de cirurgioes
 
-        try { // cuidando pra se der pane
+        try {                                                     // cuidando pra se der pane
 
             List<CirurgiaoEntity> cirurgiaoBD = cirurgiaoRepository.findAll();  // buscando no banco de dados
 
-            for (CirurgiaoEntity cirurgiao : cirurgiaoBD) {  // esse percorre todos os cirurgioes retornados do banco de dados
+            for (CirurgiaoEntity cirurgiao : cirurgiaoBD) {        // esse percorre todos os cirurgioes retornados do banco de dados
               
-                Cirurgiao a = new Cirurgiao(cirurgiao.getNome(), cirurgiao.getIdade(), cirurgiao.getSexo(), cirurgiao.getEspecialidade(), cirurgiao.getRm(); // instanciando um novo cirurgiao
+                Cirurgiao a = new Cirurgiao ();                     // instanciando um novo cirurgiao
+                 a.setNome(cirurgiao.getNome());
+                 a.setEspecialidade(cirurgiao.getEspecialidade());
+                 a.setRM(cirurgiao.getRm());
+                 a.setIdade(cirurgiao.getIdade());
+                 a.setId(cirurgiao.getId());
 
-
-
-                return cirurgioes; // retornadno todos cirurgioes
+                 cirurgioes.add(a);
 
             }
+            return cirurgioes; // retornadno todos cirurgioes
+
 
         } catch (Exception e) { // se der erro vai retornar essa mensagem
             e.printStackTrace();
-            System.out.println("cirurgioes não encontrados");
+            System.out.println("cirurgião não encontrados");
 
 
         }
         return cirurgioes; //retornar todos cirurgioes
 
 
+    }
+
+    public Cirurgiao saveCirurgiao(Cirurgiao cirurgiao){
+
+        try{
+            CirurgiaoEntity cirurgiaoEntity = new CirurgiaoEntity();
+
+            // TODO: Continuar com o mapeamento dos objetos aqui
+
+            cirurgiaoEntity.setNome(cirurgiao.getNome());
+            cirurgiaoEntity.setEspecialidade(cirurgiao.getEspecialidade());
+            cirurgiaoEntity.setRm(cirurgiao.getRM());
+            cirurgiaoEntity.setIdade(cirurgiao.getIdade());
+            cirurgiaoEntity.setSexo(cirurgiao.getSexo());
+
+
+            // Aqui salvamos o objeto
+            cirurgiaoRepository.save(cirurgiaoEntity);
+
+            // Aqui retornei o ID em que o paciente foi salvo no BD
+            cirurgiao.setId(cirurgiaoEntity.getId());
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("cirurgiao não pode ser salvo");
+
+            return cirurgiao;
+        }
+
+        return cirurgiao;
 
     }
+
+    public Cirurgiao putCirurgiao(Cirurgiao cirurgiaoAtualizado, long id){
+
+        try{
+            Optional<CirurgiaoEntity> cirurgiaoBD = cirurgiaoRepository.findById(id);
+
+            cirurgiaoBD.get().setNome(cirurgiaoAtualizado.getNome());
+            cirurgiaoBD.get().setEspecialidade(cirurgiaoAtualizado.getEspecialidade());
+            cirurgiaoBD.get().setRm(cirurgiaoAtualizado.getRM());
+            cirurgiaoBD.get().setIdade(cirurgiaoAtualizado.getIdade());
+            cirurgiaoBD.get().setSexo(cirurgiaoAtualizado.getSexo());
+            cirurgiaoBD.get().setId(cirurgiaoAtualizado.getId());
+
+            CirurgiaoEntity cirurgiaoSalvo = cirurgiaoRepository.save(cirurgiaoBD.get());
+
+            Cirurgiao putCirurgiao = new Cirurgiao();
+
+            putCirurgiao.setNome(cirurgiaoSalvo.getNome());
+            putCirurgiao.setEspecialidade(cirurgiaoSalvo.getEspecialidade());
+            putCirurgiao.setRM(cirurgiaoSalvo.getRm());
+            putCirurgiao.setIdade(cirurgiaoSalvo.getIdade());
+            putCirurgiao.setSexo(cirurgiaoSalvo.getSexo());
+            putCirurgiao.setId(cirurgiaoSalvo.getId());
+
+            return putCirurgiao;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            System.out.println("Cirurgião não pode ser editado");
+
+        }
+        return cirurgiaoAtualizado;
+    }
+
+    public boolean deleteCirurgiao(long id){
+
+        try{
+            Optional<CirurgiaoEntity> buscarid = cirurgiaoRepository.findById(id);
+
+            if (buscarid.isEmpty()) {
+                System.out.println("Cirurgião não encontrado");
+            }else {
+                System.out.println("Cirurgião apagado com sucesso");
+                cirurgiaoRepository.deleteById(id);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Cirurgião não pode ser deletado");
+        }
+        return true;
+    }
+
+
 }

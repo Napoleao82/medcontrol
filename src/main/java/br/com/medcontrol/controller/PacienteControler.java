@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Id;
 import java.util.List;
 
-@RequestMapping("Paciente")
+@RequestMapping("pacientes")
 @RestController
 
 public class PacienteControler {

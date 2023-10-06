@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Id;
 import java.util.List;
 
-@RequestMapping("Cirurgiao")
+@RequestMapping("cirurgioes")
 @RestController
 
 
@@ -21,7 +21,7 @@ public class CirurgiaoControler {
     private CirurgiaoService cirurgiaoService;
 
     @GetMapping
-    public ResponseEntity<List<Cirurgioes>> getCirurgioes(){
+    public ResponseEntity<List<Cirurgiao>> getCirurgioes(){
 
         return ResponseEntity.ok(cirurgiaoService.getcirurgioes());
 

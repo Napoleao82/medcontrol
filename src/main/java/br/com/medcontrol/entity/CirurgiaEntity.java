@@ -17,7 +17,7 @@ public class CirurgiaEntity {
     public Long id;
 
     @Column(name = "CIRURGIAO")
-    public String  Cirugiao;
+    public String  cirugiao;
 
 
     @Column(name = "PACIENTE")

@@ -17,20 +17,20 @@ public class CirurgiaoEntity {
     public Long id;
 
     @Column(name = "NOME")
-    public String  Nome;
+    public String  nome;
 
     @Column(name = "ESPECIALIDADE")
-    public String  Especialidade;
+    public String  especialidade;
 
     @Column(name = "RM")
-    public String  Rm;
+    public String  rm;
 
 
     @Column(name = "IDADE")
-    public String Idade;
+    public int idade;
 
     @Column(name = "SEXO")
-    public String Sexo;
+    public char sexo;
 
 
 }

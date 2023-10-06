@@ -16,16 +16,13 @@ public class PacienteEntity {
 
 
     @Column(name = "NOME")
-     public String  Nome;
+     public String  nome;
 
     @Column(name = "IDADE")
-     public String Idade;
+     public int idade;
 
     @Column(name = "SEXO")
-     public char Sexo;
-
-
-
+     public char sexo;
 
 
 
