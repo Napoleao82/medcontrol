@@ -126,7 +126,7 @@ public class CirurgiaoService {
             cirurgiaoBD.get().setRm(cirurgiaoAtualizado.getRM());
             cirurgiaoBD.get().setIdade(cirurgiaoAtualizado.getIdade());
             cirurgiaoBD.get().setSexo(cirurgiaoAtualizado.getSexo());
-            cirurgiaoBD.get().setId(cirurgiaoAtualizado.getId());
+
 
             CirurgiaoEntity cirurgiaoSalvo = cirurgiaoRepository.save(cirurgiaoBD.get());
 
