@@ -17,14 +17,18 @@ public class CirurgiaEntity {
     public Long id;
 
     @Column(name = "CIRURGIAO")
-    public String  Cirugiao;
+    public String  cirugiao;
+
 
     @Column(name = "PACIENTE")
     public String Paciente;
+
 
     @Column(name = "DT_CIRURGIA")
     public String dataCirurgia;
 
     @Column(name = "TIPO_CIRURGIA")
     public String tipoCirurgia;
+
+
 }
